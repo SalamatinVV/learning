@@ -8,6 +8,12 @@ int *array_input(int *size)
     scanf(" %d", &n);
     printf("\n");
 
+    if(n < 0)
+    {
+        printf("Массив не может быть меньше нуля\n");
+        return NULL;
+    }
+
     int *array = malloc(n * sizeof(int));
 
     if(array == NULL)
@@ -30,10 +36,10 @@ int *array_input(int *size)
     return array;
 }
 
-int massive_stat(int size, int array[])
+int massive_stat(int size, const int array[])
 {
     
-    int sum = 0;
+    float sum = 0.0;
     int max = array[0];
     int min = array[0];
     int count_p = 0;
@@ -50,12 +56,12 @@ int massive_stat(int size, int array[])
 
     float average = sum / size;
 
-    printf("Sum = %d \n", sum);
+    printf("Sum = %1.0f \n", sum);
     printf("Max = %d \n", max);
     printf("Min = %d \n", min);
     printf("Positive = %d \n", count_p);
     printf("Negative = %d \n", count_n);
-    printf("Average  = %f \n", average);
+    printf("Average  = %0.3f \n", average);
 
     return 0;
 }
@@ -90,6 +96,15 @@ void swap_array(int size, int array[])
     
 }
 
+void copy_array(const int src[], int dst[], int size)
+{
+    for(int i = 0; i < size; i++)
+    {
+        dst[i] = src[i];
+    }
+}
+
+
 int *sort_array(int size, int array[])
 {
     int *sort_array = malloc(size * sizeof(int));
@@ -99,7 +114,7 @@ int *sort_array(int size, int array[])
         return NULL;
     }
     
-    sort_array = array;
+    copy_array(array, sort_array, size);
 
     for(int i = 0; i < size - 1; i++)
     {
@@ -138,7 +153,7 @@ int main(void)
     //    printf("%d\n", array[i]);
     //}
 
-    /*
+    /* Sorting array */
     int *sorting_array = sort_array(n, array);
     if(sorting_array == NULL)
     {
@@ -149,8 +164,8 @@ int main(void)
     {
         printf("%d\n", sorting_array[i]);
     }
-    */
-
+    free(sorting_array);
+    
     free(array);
 
     return 0;
